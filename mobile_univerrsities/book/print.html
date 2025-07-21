@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Coxygen Global Haskel Plutus Mobile app User Help</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 📘 Introduction</a></li><li class="chapter-item expanded "><a href="get_started.html"><strong aria-hidden="true">2.</strong> 🧭 Get Started</a></li><li class="chapter-item expanded "><a href="verify.html"><strong aria-hidden="true">3.</strong> 📧 Verify Email and Phone Code</a></li><li class="chapter-item expanded "><a href="create_wallet.html"><strong aria-hidden="true">4.</strong> 🔐 Creating Your Cardano Wallet</a></li><li class="chapter-item expanded "><a href="connect_wallet_and_faucet.html"><strong aria-hidden="true">5.</strong> 🔗 Connect Wallet & Get Test ADA</a></li><li class="chapter-item expanded "><a href="profile.html"><strong aria-hidden="true">6.</strong> 👤 Profile</a></li><li class="chapter-item expanded "><a href="access_lessons.html"><strong aria-hidden="true">7.</strong> 📘 Accessing the Haskell Plutus Lessons</a></li><li class="chapter-item expanded "><a href="haskell_quiz.html"><strong aria-hidden="true">8.</strong> 🧠 Completing the Haskell Plutus Quizzes</a></li><li class="chapter-item expanded "><a href="haskell_tasks.html"><strong aria-hidden="true">9.</strong> 💻 Completing the Haskell Plutus Tasks</a></li><li class="chapter-item expanded "><a href="onchain_work_traceability.html"><strong aria-hidden="true">10.</strong> 📈 On-Chain Work Traceability & Credential Minting</a></li><li class="chapter-item expanded "><a href="github.html"><strong aria-hidden="true">11.</strong> 📁 How to use Github</a></li><li class="chapter-item expanded "><a href="coxy_wallet.html"><strong aria-hidden="true">12.</strong> 👛 Coxy Pocket Wallet</a></li><li class="chapter-item expanded "><a href="lost_pin.html"><strong aria-hidden="true">13.</strong> 🔐 Lost PIN Recovery</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">14.</strong> ✅ Conclusion</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Coxygen Global Haskel Plutus Mobile app User Help</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p align="center">
+  <img src="logo.png" alt="Coxygen Logo" width="200" />
+</p>
+<h1 id="-welcome-to-the-coxygen-haskell-plutus-program"><a class="header" href="#-welcome-to-the-coxygen-haskell-plutus-program">👋 Welcome to the Coxygen Haskell Plutus Program</a></h1>
+<p><strong>Author</strong>: <em>Ridotshila Mambeda</em><br />
+<strong>Last Updated</strong>: July 15, 2025</p>
+<hr />
+<p>Welcome to the official learning guide for the <strong>Coxygen Global Haskell &amp; Plutus Program</strong> — your first step toward mastering smart contract development on the Cardano blockchain.</p>
+<p>This interactive learning platform will walk you through:</p>
+<p>✅ Program enrollment and verification<br />
+✅ Setting up a secure Cardano wallet<br />
+✅ Navigating beginner-friendly Haskell and Plutus lessons<br />
+✅ Completing tasks, quizzes, and submitting proofs of work<br />
+✅ Minting your blockchain credentials and tokens</p>
+<blockquote>
+<p>🎓 Whether you're a student, developer, or blockchain enthusiast, this course is built to empower your journey — one lesson at a time.</p>
+</blockquote>
+<hr />
+<h2 id="-how-to-use-this-guide"><a class="header" href="#-how-to-use-this-guide">📘 How to Use This Guide</a></h2>
+<ul>
+<li>Use the sidebar to navigate chapters in order.</li>
+<li>Follow the tasks step-by-step.</li>
+<li>Don't skip any lessons — each is designed to build your skills progressively.</li>
+<li>Take screenshots, save your code, and submit your work properly.</li>
+</ul>
+<hr />
+<h2 id="-need-help"><a class="header" href="#-need-help">💬 Need Help?</a></h2>
+<p>If you need assistance setting up your wallet:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📱 WhatsApp: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-getting-started-with-coxygen-global-universities--colleges"><a class="header" href="#-getting-started-with-coxygen-global-universities--colleges">🌟 Getting Started with Coxygen Global Universities &amp; Colleges</a></h1>
+<p><strong>Your Gateway to Blockchain Excellence</strong></p>
+<p>Welcome to a groundbreaking opportunity to master <strong>Haskell and Plutus</strong> — the backbone of smart contracts on the Cardano blockchain. This guide walks you through every step of enrolling in the <strong>Coxygen Haskell Plutus Program</strong>, a global initiative designed to upskill and empower future developers.</p>
+<hr />
+<h2 id="-why-enroll-in-this-program"><a class="header" href="#-why-enroll-in-this-program">🔹 Why Enroll in This Program?</a></h2>
+<ul>
+<li>🚀 <strong>Career-Boosting Skills</strong>: Learn <strong>Haskell and Plutus</strong>, the smart contract language for Cardano — a highly sought-after skill in blockchain development.</li>
+<li>🌍 <strong>Global Collaboration</strong>: Join a vibrant network of learners, developers, and professionals from across Africa and around the world.</li>
+<li>🎓 <strong>Certified Learning</strong>: Earn a certificate of completion and gain recognition in the Cardano ecosystem.</li>
+<li>🧠 <strong>Expert Mentorship</strong>: Learn directly from experienced facilitators and blockchain developers in the space.</li>
+</ul>
+<hr />
+<h2 id="-step-1-enroll-now"><a class="header" href="#-step-1-enroll-now">✅ Step 1: Enroll Now</a></h2>
+<p><img src="enroll.png" alt="Enroll" /></p>
+<p>Start your journey today:<br />
+🔗 <a href="https://coxygen.co/universities/enrollment.php">Click to Enroll</a></p>
+<p>This link will take you to the official enrollment page where you’ll fill in your personal and academic details.</p>
+<hr />
+<h2 id="-step-2-fill-in-your-enrollment-form"><a class="header" href="#-step-2-fill-in-your-enrollment-form">📝 Step 2: Fill In Your Enrollment Form</a></h2>
+<p>You’ll need the following information:</p>
+<h3 id="-personal-information"><a class="header" href="#-personal-information">👤 Personal Information</a></h3>
+<ul>
+<li><strong>First Name</strong>*: As it appears on your ID or passport</li>
+<li><strong>Last Name</strong>*: Surname or family name</li>
+<li><strong>Gender</strong>*: Select from Male, Female, Non-binary, etc.</li>
+<li><strong>ID Number</strong>*: South African ID or international passport number</li>
+</ul>
+<h3 id="-academic-background"><a class="header" href="#-academic-background">🎓 Academic Background</a></h3>
+<ul>
+<li><strong>Qualification</strong>*: Your highest level of education (e.g., Diploma, BSc, BTech, etc.)</li>
+<li><strong>Institution</strong>*: Name of your university or college</li>
+<li><strong>Institution Address</strong>*: Full address (street, city, province, postal code)</li>
+<li><strong>Student Number</strong>*: Your institution-assigned student number</li>
+</ul>
+<h3 id="-contact-details"><a class="header" href="#-contact-details">📱 Contact Details</a></h3>
+<ul>
+<li><strong>Mobile Number</strong>*: <strong>All mobile numbers must be in international format</strong> — e.g., <code>+27xxxxxxxxx</code></li>
+<li><strong>Primary Email</strong>*: Your main email address (used for system communication)</li>
+<li><strong>Secondary Email</strong>*: This must be a <strong>working, correct, and accessible</strong> email address</li>
+<li><strong>Home Address</strong>*: Full residential address for verification purposes</li>
+</ul>
+<h3 id="-communication-channels"><a class="header" href="#-communication-channels">💬 Communication Channels</a></h3>
+<ul>
+<li><strong>Telegram Username</strong>*: Required to access update channels and receive notifications</li>
+<li><strong>Discord Username</strong>*: Used for workshops, voice discussions, and developer communities</li>
+</ul>
+<h3 id="-additional-information"><a class="header" href="#-additional-information">📚 Additional Information</a></h3>
+<ul>
+<li>List any blockchain-related groups, chats, or forums you've joined (one per line)</li>
+<li>Include full URLs or usernames if applicable</li>
+</ul>
+<blockquote>
+<p>🛡️ <strong>Privacy Note</strong>: All submitted information is securely stored and used exclusively for academic and program-related purposes.</p>
+</blockquote>
+<hr />
+<h2 id="-step-3-submit-your-enrollment"><a class="header" href="#-step-3-submit-your-enrollment">📤 Step 3: Submit Your Enrollment</a></h2>
+<p>Before submitting:</p>
+<ul>
+<li>✅ Review all entries — especially your contact information</li>
+<li>✅ Ensure your Telegram and Discord usernames are correct</li>
+<li>✅ Click the <strong>Enroll</strong> button at the bottom of the form</li>
+</ul>
+<hr />
+<h2 id="-what-comes-next"><a class="header" href="#-what-comes-next">💻 What Comes Next?</a></h2>
+<p>After successful enrollment:</p>
+<ul>
+<li>✅ <strong>Verify your email and phone number</strong> — codes will be sent for confirmation</li>
+<li>✅ <strong>Complete your on-chain credential</strong> (detailed in Chapter 2)</li>
+<li>📚 <strong>Start your learning</strong> from Haskell Chapter 1 through Chapter 19</li>
+<li>📝 <strong>Complete quizzes</strong> to test your understanding</li>
+<li>🧪 <strong>Perform hands-on tasks and mini-projects</strong> for real blockchain experience</li>
+</ul>
+<hr />
+<h2 id="-need-help-1"><a class="header" href="#-need-help-1">💬 Need Help?</a></h2>
+<p>If you need support at any stage:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a> | <a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+<li>🌐 WhatsApp Support: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-email--phone-verification-guide"><a class="header" href="#-email--phone-verification-guide">🔐 Email &amp; Phone Verification Guide</a></h1>
+<p>To ensure secure access and successful participation in the <strong>Coxygen Haskell Plutus Program</strong>, verifying your <strong>Email</strong> and <strong>Phone number</strong> is <strong>mandatory</strong>.</p>
+<hr />
+<h2 id="-for-new-students-after-enrollment"><a class="header" href="#-for-new-students-after-enrollment">🆕 For New Students (After Enrollment)</a></h2>
+<p>After submitting your enrollment form:</p>
+<ol>
+<li>
+<p>✅ <strong>Check for Verification Codes</strong></p>
+<ul>
+<li>You will receive <strong>two codes</strong>:
+<ul>
+<li>📧 One via <strong>Email</strong></li>
+<li>📱 One via <strong>SMS</strong> on your phone number</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>🔍 <strong>Check Your Email Inbox</strong></p>
+<ul>
+<li>Be sure to <strong>check your Spam or Promotions folder</strong>, especially if you’re using Gmail.</li>
+<li>The email contains your <strong>Email verification code</strong>.</li>
+</ul>
+</li>
+<li>
+<p>📲 <strong>Check Your SMS Messages</strong></p>
+<ul>
+<li>You’ll receive a <strong>Phone verification code</strong> via SMS on the number you registered.</li>
+</ul>
+</li>
+<li>
+<p>🔐 <strong>Verify Your Email &amp; Phone</strong></p>
+</li>
+</ol>
+<p><img src="verify.png" alt="enroll" /></p>
+<ul>
+<li>Go to: <a href="https://coxygen.co/universities/verifyEmailAndPhone.php">https://coxygen.co/universities/verifyEmailAndPhone.php</a></li>
+<li>Enter your <strong>primary email</strong></li>
+<li>Enter the <strong>email code</strong> and <strong>phone code</strong></li>
+<li>Click <strong>“Verify Email and Phone Code”</strong></li>
+</ul>
+<hr />
+<h2 id="-for-already-enrolled-students-who-missed-or-lost-codes"><a class="header" href="#-for-already-enrolled-students-who-missed-or-lost-codes">🔁 For Already Enrolled Students (Who Missed or Lost Codes)</a></h2>
+<p>If you’ve already enrolled but didn’t verify or lost your codes:</p>
+<ol>
+<li>
+<p>🔄 <strong>Request New Verification Codes</strong></p>
+<ul>
+<li>Go to: <a href="https://coxygen.co/universities/requestEmailAndPhoneCodes.php">https://coxygen.co/universities/requestEmailAndPhoneCodes.php</a></li>
+<li>Enter your <strong>primary email</strong> and <strong>phone number</strong></li>
+<li>Click <strong>“Request Email &amp; Phone Code”</strong></li>
+</ul>
+</li>
+<li>
+<p>📬 <strong>Check Your Inbox and SMS</strong></p>
+<ul>
+<li>Look for a new <strong>email verification code</strong> (check spam too)</li>
+<li>Wait for a new <strong>SMS code</strong> on your phone</li>
+</ul>
+</li>
+<li>
+<p>✅ <strong>Verify</strong></p>
+<ul>
+<li>Once you receive both codes, return to:
+<ul>
+<li><a href="https://coxygen.co/universities/verifyEmailAndPhone.php">https://coxygen.co/universities/verifyEmailAndPhone.php</a></li>
+</ul>
+</li>
+<li>Enter your <strong>email</strong> and both codes</li>
+<li>Click <strong>“Verify Email and Phone Code”</strong></li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="-need-help-2"><a class="header" href="#-need-help-2">💬 Need Help?</a></h2>
+<p>If you need assistance setting up your wallet:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📱 WhatsApp: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-creating-your-cardano-wallet"><a class="header" href="#-creating-your-cardano-wallet">🔐 Creating Your Cardano Wallet</a></h1>
+<p>Once you’ve completed your <strong>Email &amp; Phone verification</strong>, the next step is to <strong>create your Cardano wallet</strong>. This wallet will store your blockchain credentials and be used for learning, certifications, and smart contract interactions.</p>
+<hr />
+<h2 id="-why-you-need-a-wallet"><a class="header" href="#-why-you-need-a-wallet">🪪 Why You Need a Wallet</a></h2>
+<ul>
+<li>To <strong>receive on-chain credentials</strong></li>
+<li>To <strong>interact with the Cardano testnet</strong></li>
+<li>To <strong>store tokens, credentials, and certificates</strong></li>
+<li>To <strong>connect with dApps and smart contracts</strong></li>
+</ul>
+<hr />
+<h2 id="-how-to-create-your-wallet"><a class="header" href="#-how-to-create-your-wallet">🛠️ How to Create Your Wallet</a></h2>
+<p><img src="wallet.png" alt="alt text" /></p>
+<hr />
+<h2 id="-step-1-set-a-secure-passphrase"><a class="header" href="#-step-1-set-a-secure-passphrase">🧾 Step 1: Set a Secure Passphrase</a></h2>
+<p>When creating the wallet, you will be asked to set a <strong>strong passphrase</strong> to encrypt your <strong>private keys</strong> and <strong>mnemonic seed phrase</strong>.</p>
+<h3 id="-guidelines"><a class="header" href="#-guidelines">✅ Guidelines:</a></h3>
+<ul>
+<li>Minimum <strong>15 characters</strong></li>
+<li>Use a <strong>mix of</strong>:
+<ul>
+<li>Uppercase letters: <code>A–Z</code></li>
+<li>Lowercase letters: <code>a–z</code></li>
+<li>Numbers: <code>0–9</code></li>
+<li>Symbols: <code>!@#$%^&amp;*()_+-={}[]|\:;"'&lt;&gt;,.?/~</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✍️ <strong>Important</strong>: Write your passphrase down on <strong>paper</strong> and store it <strong>offline</strong> in a safe place.<br />
+❗ <strong>Never</strong> store it digitally or share it with anyone — anyone with this passphrase can access all your assets!</p>
+</blockquote>
+<p>🔐 <strong>Your passphrase (strong password - 15 characters long) is used for Cardano blockchain transaction signing</strong>.</p>
+<hr />
+<h2 id="-step-2-create-a-secure-pin-code"><a class="header" href="#-step-2-create-a-secure-pin-code">🔐 Step 2: Create a Secure PIN Code</a></h2>
+<p>You will also be asked to set a <strong>PIN code</strong> for everyday access and approval of wallet actions.</p>
+<h3 id="-pin-guidelines"><a class="header" href="#-pin-guidelines">✅ PIN Guidelines:</a></h3>
+<ul>
+<li>Minimum <strong>7 digits/characters</strong></li>
+<li>Combine numbers, uppercase, lowercase, and symbols (if allowed)</li>
+<li><strong>Make it different from your passphrase!</strong></li>
+</ul>
+<blockquote>
+<p>🔑 Your <strong>PIN</strong> is used for <strong>app-to-wallet connection</strong> — treat it like your bank PIN.</p>
+</blockquote>
+<hr />
+<h2 id="-security-reminders"><a class="header" href="#-security-reminders">⚠️ Security Reminders</a></h2>
+<ul>
+<li>Do <strong>not reuse</strong> your PIN or passphrase</li>
+<li>Do <strong>not share</strong> your mnemonic phrase (12 or 24 words) — <strong>ever</strong></li>
+<li>Do <strong>not screenshot or save</strong> passwords or recovery phrases on your device or cloud</li>
+<li>Always <strong>log out</strong> after using your wallet on public or shared devices</li>
+</ul>
+<hr />
+<h2 id="-what-youll-receive"><a class="header" href="#-what-youll-receive">📦 What You’ll Receive</a></h2>
+<p>After creating and securing your wallet, you’ll be able to:</p>
+<ul>
+<li>Receive <strong>test tokens and credentials</strong> for training</li>
+<li>Interact with <strong>smart contracts and dApps</strong></li>
+<li>Participate in <strong>on-chain exercises</strong></li>
+<li>Receive <strong>your certification NFTs and credentials</strong></li>
+</ul>
+<hr />
+<h2 id="-need-help-3"><a class="header" href="#-need-help-3">💬 Need Help?</a></h2>
+<p>If you need assistance setting up your wallet:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📱 WhatsApp Support: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-connect-your-wallet--receive-test-ada"><a class="header" href="#-connect-your-wallet--receive-test-ada">✅ Connect Your Wallet &amp; Receive Test ADA</a></h1>
+<p>After setting up your Cardano wallet and securing it with a passphrase and PIN, you’ll need to <strong>connect your wallet</strong> to authenticate and begin using blockchain-enabled features in the Coxygen program.</p>
+<hr />
+<h2 id="-step-1-connect-your-wallet"><a class="header" href="#-step-1-connect-your-wallet">🔗 Step 1: Connect Your Wallet</a></h2>
+<p><img src="connect.png" alt="alt text" /></p>
+<ol>
+<li>Open the app or dApp (e.g., Coxygen learning portal).</li>
+<li>Click the <strong>green “Connect Address”</strong> button.</li>
+<li>Once connected, you are authenticated and ready to proceed.</li>
+</ol>
+<blockquote>
+<p>🎉 Your wallet will come pre-loaded with <strong>a small amount of test ADA</strong> for development use.</p>
+</blockquote>
+<hr />
+<h2 id="-step-2-request-additional-test-ada"><a class="header" href="#-step-2-request-additional-test-ada">💸 Step 2: Request Additional Test ADA</a></h2>
+<p>If you need more test ADA, use the <strong>Cardano Testnet Faucet</strong>:</p>
+<p>🔗 <a href="https://docs.cardano.org/cardano-testnets/tools/faucet">Visit the Testnet Faucet</a></p>
+<hr />
+<h2 id="-how-to-use-the-cardano-faucet"><a class="header" href="#-how-to-use-the-cardano-faucet">🧪 How to Use the Cardano Faucet</a></h2>
+<p>Follow these steps carefully:</p>
+<ol>
+<li>
+<p>🧭 Under <strong>Environment</strong>, select:</p>
+<ul>
+<li><code>Preprod Testnet</code></li>
+</ul>
+</li>
+<li>
+<p>📥 At <strong>Action</strong>, select:</p>
+<ul>
+<li><code>Receive TestADA</code></li>
+</ul>
+</li>
+<li>
+<p>🧾 Under <strong>Address (required)</strong>:</p>
+<ul>
+<li>Enter your <strong>Testnet Wallet Address</strong><br />
+<em>(This address was emailed to you or found in your wallet UI)</em></li>
+</ul>
+</li>
+<li>
+<p>✅ Check the <strong>“I’m not a robot”</strong> box</p>
+<ul>
+<li>Skip the <strong>API Key</strong> field (you don’t need it)</li>
+</ul>
+</li>
+<li>
+<p>🚀 Click the <strong>“Request Funds”</strong> button</p>
+</li>
+</ol>
+<hr />
+<h2 id="-step-3-check-your-wallet-balance"><a class="header" href="#-step-3-check-your-wallet-balance">💰 Step 3: Check Your Wallet Balance</a></h2>
+<p>After requesting funds:</p>
+<ul>
+<li>Wait <strong>a few seconds to 1 minute</strong></li>
+<li>Then check your wallet balance at:<br />
+🔍 <a href="https://preprod.cexplorer.io">https://preprod.cexplorer.io</a></li>
+</ul>
+<blockquote>
+<p>Paste your wallet address in the search bar to see your balance and transaction history.</p>
+</blockquote>
+<hr />
+<h2 id="-tips"><a class="header" href="#-tips">💡 Tips</a></h2>
+<ul>
+<li>If the faucet says "Too many requests", wait a few minutes and try again.</li>
+<li>You can request test ADA <strong>multiple times</strong> if needed.</li>
+<li>Use test ADA only within the <strong>Preprod testnet</strong> environment — it has no real-world value but is essential for learning and testing.</li>
+</ul>
+<hr />
+<h2 id="-need-help-4"><a class="header" href="#-need-help-4">📞 Need Help?</a></h2>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📱 WhatsApp Support: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-accessing-your-profile--wallet-backup"><a class="header" href="#-accessing-your-profile--wallet-backup">👤 Accessing Your Profile &amp; Wallet Backup</a></h1>
+<p>Once you're logged in, clicking on <strong>"Profile"</strong> will take you to a page where you can view and manage your personal and academic information.</p>
+<hr />
+<h2 id="-what-youll-see-on-the-profile-page"><a class="header" href="#-what-youll-see-on-the-profile-page">🧾 What You’ll See on the Profile Page</a></h2>
+<p>Your profile displays all your submitted information, including:</p>
+<ul>
+<li>👤 Full Name</li>
+<li>🎓 Qualification</li>
+<li>🏫 Institution Name &amp; Address</li>
+<li>🎟️ Student Number</li>
+<li>🪪 ID/Passport Number</li>
+<li>📧 Primary Email</li>
+<li>📧 Secondary Email (if provided)</li>
+<li>🏠 Physical (Residential) Address</li>
+<li>💼 Cardano Wallet Address</li>
+</ul>
+<blockquote>
+<p>🔒 All information is securely stored and visible only to you and authorized system admins.</p>
+</blockquote>
+<hr />
+<h2 id="-wallet-recovery-backup-your-keys"><a class="header" href="#-wallet-recovery-backup-your-keys">🔐 Wallet Recovery (Backup Your Keys)</a></h2>
+<p>At the <strong>top</strong> of your profile page, you’ll find the option to view your <strong>Cardano Wallet Backup</strong> — used in case you need to restore your wallet in apps like <strong>Nami</strong>, <strong>Lace</strong>, or <strong>Eternl</strong>.</p>
+<h3 id="-to-view-your-recovery-phrase"><a class="header" href="#-to-view-your-recovery-phrase">✅ To View Your Recovery Phrase:</a></h3>
+<p><img src="phrase.png" alt="Phrase" /></p>
+<ol>
+<li><strong>Tick the checkbox</strong> labeled:
+<blockquote>
+<p><em>“Your Cardano Wallet Keys Backup”</em></p>
+</blockquote>
+</li>
+<li>Enter your <strong>PIN code</strong></li>
+<li>Enter your <strong>Passphrase (password)</strong></li>
+<li>Click on <strong>“Show Words”</strong></li>
+</ol>
+<p>💬 You will now see your <strong>recovery phrase</strong> (mnemonic words).<br />
+📝 <strong>Write it down</strong> on paper and store it safely offline — this phrase is the only way to restore access to your wallet if lost.</p>
+<blockquote>
+<p>⚠️ <strong>Warning</strong>: Never share your recovery phrase with anyone. Anyone with this phrase can access and control your wallet and funds.</p>
+</blockquote>
+<hr />
+<h2 id="-need-help-5"><a class="header" href="#-need-help-5">🛟 Need Help?</a></h2>
+<ul>
+<li>📧 Email Support:
+<ul>
+<li><a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li><a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+</ul>
+</li>
+<li>🌐 WhatsApp Support: <strong>+27 73 182 0631</strong></li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-accessing-video-lessons--online-compiler"><a class="header" href="#-accessing-video-lessons--online-compiler">🎥 Accessing Video Lessons &amp; Online Compiler</a></h1>
+<p>As part of your Haskell Plutus training, you can now access interactive lessons with videos, code compilers, and submission portals in either <strong>English</strong> or <strong>French</strong>.</p>
+<hr />
+<h2 id="-choose-your-language"><a class="header" href="#-choose-your-language">🌍 Choose Your Language</a></h2>
+<p>Start by selecting the version in your preferred language:</p>
+<ul>
+<li>🌐 <a href="https://coxygen.co/universities/haskell-lessons-english.php">Haskell Practical Tasks &amp; Progress Tracker – English</a></li>
+<li>🌐 <a href="https://coxygen.co/universities/haskell-lessons-french.php">Haskell Practical Tasks &amp; Progress Tracker – French</a></li>
+</ul>
+<hr />
+<h2 id="-lesson-structure"><a class="header" href="#-lesson-structure">✅ Lesson Structure</a></h2>
+<p>Once you've opened the lesson page, you'll see a list of <strong>green buttons</strong> such as:</p>
+<ul>
+<li><code>HL1</code> – <strong>Haskell Lesson Chapter 1</strong></li>
+<li><code>HL2</code> – <strong>Haskell Lesson Chapter 2</strong></li>
+<li>… and so on.</li>
+</ul>
+<p>Click on the chapter you want to study.</p>
+<hr />
+<h2 id="-video-lesson"><a class="header" href="#-video-lesson">🎬 Video Lesson</a></h2>
+<p>Each chapter starts with a short, engaging video explaining the key concepts for that chapter.</p>
+<p><img src="lessons.png" alt="Video Preview" /></p>
+<hr />
+<h2 id="-practical-task-follows-the-video"><a class="header" href="#-practical-task-follows-the-video">🛠️ Practical Task Follows the Video</a></h2>
+<p>Immediately after the video, you’ll find the <strong>practical task</strong> section designed to help you apply what you've just learned.</p>
+<hr />
+<h2 id="-haskell-online-compiler"><a class="header" href="#-haskell-online-compiler">💻 Haskell Online Compiler</a></h2>
+<p><img src="compiler.png" alt="Compiler Preview" /></p>
+<p>A built-in browser compiler is provided for hands-on learning:</p>
+<ul>
+<li>Type your Haskell code in the editor</li>
+<li>Click <strong>Run</strong> to execute</li>
+<li>Instantly see the output below</li>
+</ul>
+<p>No setup required!</p>
+<hr />
+<h2 id="-submitting-or-saving-your-code"><a class="header" href="#-submitting-or-saving-your-code">📝 Submitting or Saving Your Code</a></h2>
+<p><img src="submit.png" alt="Submission Preview" /></p>
+<p>Once you're done coding and testing:</p>
+<ol>
+<li>Scroll down to the <strong>submission section</strong></li>
+<li>Select your <strong>chapter (e.g., HL1, HL2...)</strong></li>
+<li>Paste:
+<ul>
+<li>Your final <strong>Haskell code</strong></li>
+<li>The <strong>output</strong></li>
+</ul>
+</li>
+<li>Click <strong>Submit Code</strong></li>
+</ol>
+<p>✅ This saves your work for progress tracking, mentoring, and verification.</p>
+<hr />
+<h2 id="-need-help-6"><a class="header" href="#-need-help-6">🆘 Need Help?</a></h2>
+<p>Reach out any time if you're stuck or need clarification:</p>
+<ul>
+<li>📧 <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📧 <a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+<li>🌐 WhatsApp Support: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-completing-the-haskell-plutus-quizzes"><a class="header" href="#-completing-the-haskell-plutus-quizzes">📝 Completing the Haskell Plutus Quizzes</a></h1>
+<p>After you've successfully enrolled and verified your <strong>Email &amp; Phone</strong>, your next step in the <strong>Coxygen Haskell Plutus Program</strong> is to complete the <strong>required quizzes</strong>.</p>
+<p>These quizzes assess your understanding of both <strong>theoretical concepts</strong> and <strong>practical applications</strong> of <strong>Haskell</strong> and <strong>Plutus</strong>.</p>
+<hr />
+<h2 id="-step-1-navigate-to-the-quiz-page"><a class="header" href="#-step-1-navigate-to-the-quiz-page">🚀 Step 1: Navigate to the Quiz Page</a></h2>
+<p><img src="quiz.jpg" alt="alt text" />
+Access the official quiz platform here:</p>
+<p>🔗 <a href="https://coxygen.co/universities/quiz/">Haskell Plutus Quizzes Page</a></p>
+<p>Or click the <strong>“Haskell Plutus Quizzes”</strong> link in the website’s top navigation menu.</p>
+<hr />
+<h2 id="-step-2-complete-all-17-quizzes"><a class="header" href="#-step-2-complete-all-17-quizzes">🧠 Step 2: Complete All 17 Quizzes</a></h2>
+<p>You are required to complete <strong>17 quizzes</strong> in <strong>sequential order</strong>:</p>
+<ol>
+<li>Start with <strong>Haskell Quiz 1</strong></li>
+<li>Progress through to <strong>Haskell Quiz 17</strong></li>
+</ol>
+<h3 id="-quiz-types-include"><a class="header" href="#-quiz-types-include">📚 Quiz Types Include:</a></h3>
+<ul>
+<li>✅ <strong>Multiple-choice questions (MCQs)</strong></li>
+<li>✅ <strong>Code-based assessments</strong></li>
+<li>✅ <strong>Conceptual logic challenges</strong></li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Important</strong>: You can <strong>only attempt each quiz once</strong>. No retries are allowed — so focus carefully.</p>
+</blockquote>
+<hr />
+<h3 id="-tips-for-success"><a class="header" href="#-tips-for-success">📖 Tips for Success</a></h3>
+<ul>
+<li>Read <strong>each question</strong> and <strong>instruction</strong> thoroughly.</li>
+<li>Take your time and think critically before selecting answers.</li>
+<li>Avoid rushing — <strong>there are no second chances per quiz</strong>.</li>
+</ul>
+<hr />
+<h2 id="-step-3-submitting-the-quizzes"><a class="header" href="#-step-3-submitting-the-quizzes">📤 Step 3: Submitting the Quizzes</a></h2>
+<p>After you complete each quiz:</p>
+<ul>
+<li>✅ Your answers are <strong>automatically recorded</strong>.</li>
+<li>🚫 <strong>No changes or edits</strong> are allowed after submission.</li>
+<li>💾 Each quiz submission is <strong>final</strong>.</li>
+</ul>
+<hr />
+<h2 id="-step-4-capture-your-quiz-token-certificate"><a class="header" href="#-step-4-capture-your-quiz-token-certificate">📸 Step 4: Capture Your Quiz Token Certificate</a></h2>
+<p>Once you complete a quiz (or set of quizzes), you may receive a <strong>Bedge Certificate</strong> — a digital badge verifying your participation.</p>
+<h3 id="-what-to-do"><a class="header" href="#-what-to-do">🔍 What to Do:</a></h3>
+<ul>
+<li>📸 Take a <strong>clear screenshot</strong> of your <strong>Token Certificate</strong> after completion.</li>
+<li>💾 Save the screenshot on your device and <strong>label it clearly</strong> (e.g., <code>QuizToken1.png</code>).</li>
+</ul>
+<hr />
+<h2 id="-step-5-include-in-your-final-submission"><a class="header" href="#-step-5-include-in-your-final-submission">📦 Step 5: Include in Your Final Submission</a></h2>
+<p>When submitting your practical tasks:</p>
+<ul>
+<li>✅ <strong>Upload all task screenshots</strong> (e.g., HC1T1.png, HC1T2.png, etc.)</li>
+<li>✅ <strong>Include your Token Certificate screenshots</strong> along with the tasks.</li>
+<li>📤 Submit everything via the submission page (e.g., <code>PC1</code>, <code>PC2</code> buttons)</li>
+</ul>
+<blockquote>
+<p>🧠 This helps verify that you completed <strong>both the practical and quiz components</strong> of the program.</p>
+</blockquote>
+<hr />
+<h2 id="-need-help-7"><a class="header" href="#-need-help-7">🆘 Need Help?</a></h2>
+<p>If you encounter any issues such as missing quizzes, technical errors, or submission problems:</p>
+<ul>
+<li>📧 Email:
+<ul>
+<li><a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li><a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+</ul>
+</li>
+<li>🌐 WhatsApp Support: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-completing-the-haskell-plutus-practical-tasks"><a class="header" href="#-completing-the-haskell-plutus-practical-tasks">🧪 Completing the Haskell Plutus Practical Tasks</a></h1>
+<p>Welcome to the most exciting part of your learning journey!</p>
+<p><strong>Mastering Haskell and Plutus requires hands-on practice</strong> — and that's exactly what these tasks are built for.</p>
+<hr />
+<h2 id="-step-1-navigate-to-the-task-page"><a class="header" href="#-step-1-navigate-to-the-task-page">🗺️ Step 1: Navigate to the Task Page</a></h2>
+<p>Start by accessing the official task page here:</p>
+<p>🌐 <a href="https://coxygen.co/universities-test/haskell-lessons-english.php">Haskell Practical Tasks &amp; Progress Tracker – English</a></p>
+<ul>
+<li>Scroll to under the lesson video you will get your practical tasks questions</li>
+</ul>
+<hr />
+<h2 id="-step-2-understand-the-tasks"><a class="header" href="#-step-2-understand-the-tasks">📚 Step 2: Understand the Tasks</a></h2>
+<p>Each task is carefully designed to help you:</p>
+<ul>
+<li>✅ Grasp <strong>Haskell fundamentals</strong>: functional programming, pattern matching, types, etc.</li>
+<li>✅ Write, test, and deploy Cardano smart contracts</li>
+<li>✅ Solve real-world blockchain problems</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>Important</strong>: Skipping tasks or rushing may lead to gaps in understanding, especially for advanced Plutus topics.</p>
+</blockquote>
+<hr />
+<h2 id="-step-3-completing-the-tasks"><a class="header" href="#-step-3-completing-the-tasks">🛠️ Step 3: Completing the Tasks</a></h2>
+<p>To succeed in the program and gain proper verification:</p>
+<ol>
+<li>✅ <strong>Start with Task 1</strong> and follow the tasks in sequence.</li>
+<li>📖 <strong>Read the instructions</strong> on each task page thoroughly.</li>
+<li>🧠 <strong>Understand the objective</strong> of each task before starting.</li>
+<li>✍️ Complete tasks by:
+<ul>
+<li>Writing <strong>Haskell or Plutus code</strong></li>
+<li>Explaining theoretical ideas</li>
+<li>Deploying and testing contracts (on-chain/off-chain)</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="-step-4-screenshot-every-completed-task"><a class="header" href="#-step-4-screenshot-every-completed-task">📸 Step 4: Screenshot Every Completed Task</a></h2>
+<p>You are required to take a screenshot of every completed task as <strong>proof of work</strong>.</p>
+<h3 id="-your-screenshot-must-show"><a class="header" href="#-your-screenshot-must-show">📷 Your screenshot must show:</a></h3>
+<ul>
+<li>✅ The <strong>task number and title</strong> (e.g., HC1T1)</li>
+<li>✅ Your <strong>code or written solution</strong></li>
+<li>✅ Any <strong>output, results, or successful test</strong></li>
+</ul>
+<p>💾 Save each screenshot on your device.<br />
+📂 Organize them by task, e.g.: <code>HC1T1.png</code>, <code>HC1T2.png</code>, <code>HC1T3.png</code></p>
+<blockquote>
+<p>💡 Tip: Ensure screenshots are <strong>readable and labeled</strong> for easier review.</p>
+</blockquote>
+<hr />
+<h2 id="-step-5-save-your-code-online--mandatory-step"><a class="header" href="#-step-5-save-your-code-online--mandatory-step">💾 Step 5: Save Your Code Online (✅ Mandatory Step)</a></h2>
+<p>You are <strong>required</strong> to save your code on the Coxygen platform for record-keeping, mentorship, and certification tracking.</p>
+<p>Follow these steps:</p>
+<ol>
+<li>🔽 <strong>Scroll to the bottom</strong> of the <a href="https://coxygen.co/universities-test/haskell.php">Haskell Tasks Page</a></li>
+<li>📘 <strong>Select the Chapter</strong> you're working on (e.g., Chapter 1)</li>
+<li>⌨️ <strong>Paste your code</strong> into the <strong>“Code”</strong> input box</li>
+<li>🧾 <strong>Paste the output</strong> from running your code into the <strong>“Output”</strong> box</li>
+<li>✅ Click <strong>“Submit Code”</strong> to save it to your profile</li>
+</ol>
+<blockquote>
+<p>🛡️ This step is <strong>mandatory</strong>. It ensures your progress is securely recorded and can be reviewed for feedback, verification, and token rewards.</p>
+</blockquote>
+<hr />
+<h2 id="-step-6-submit-your-code-to-github--required"><a class="header" href="#-step-6-submit-your-code-to-github--required">🌐 Step 6: Submit Your Code to GitHub (✅ Required)</a></h2>
+<p>To enhance transparency, accessibility, and showcase your skills, you must also submit all your Haskell codes to your personal GitHub repository.</p>
+<p><a href="github.html">📁 Follow these guidelines</a></p>
+<hr />
+<h2 id="-summary-of-what-you-must-submit"><a class="header" href="#-summary-of-what-you-must-submit">✅ Summary of What You Must Submit</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Task Submission Area</th><th>Status</th></tr></thead><tbody>
+<tr><td>✔ Code on Coxygen Platform</td><td>Mandatory</td></tr>
+<tr><td>✔ Screenshots (Proof of Work)</td><td>Mandatory</td></tr>
+<tr><td>✔ Code on GitHub (MIT Licensed)</td><td>Mandatory</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="-need-help-8"><a class="header" href="#-need-help-8">🆘 Need Help?</a></h2>
+<p>Help is always available:</p>
+<ul>
+<li>📧 Email:
+<ul>
+<li><a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li><a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+</ul>
+</li>
+<li>🌐 WhatsApp Support: <strong>+27 73 182 0631</strong></li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-on-chain-work-progress-traceability--credential-minting"><a class="header" href="#-on-chain-work-progress-traceability--credential-minting">📈 On-Chain Work Progress Traceability &amp; Credential Minting</a></h1>
+<p>To ensure that your Haskell and Plutus work is securely stored, verifiable, and tamper-proof, Coxygen uses <strong>Cardano blockchain</strong> to <strong>mint proof-of-work tokens</strong>.</p>
+<p>These tokens are <strong>on-chain credentials</strong> that verify your learning, participation, and task completion.</p>
+<hr />
+<h2 id="-step-6-submit-your-screenshots-final-submission"><a class="header" href="#-step-6-submit-your-screenshots-final-submission">🟢 Step 6: Submit Your Screenshots (Final Submission)</a></h2>
+<p>When you're ready to finalize and record your work on-chain:</p>
+<ol>
+<li>Click the green <strong>Submit</strong> button (e.g., <code>UPT1</code>, <code>UPT2</code>, etc.)</li>
+<li>You’ll be taken to a secure upload form</li>
+</ol>
+<h3 id="fill-out-the-form"><a class="header" href="#fill-out-the-form">Fill out the form:</a></h3>
+<ul>
+<li>🔐 <strong>Passphrase</strong></li>
+<li>🔢 <strong>PIN Code</strong></li>
+<li>📂 Click <strong>"Choose File"</strong> and upload your saved screenshots</li>
+<li>🖱️ Click <strong>"Upload File"</strong></li>
+<li>🪙 Finally, click <strong>"Mint Token"</strong> to create your <strong>on-chain credential</strong></li>
+</ul>
+<blockquote>
+<p><strong>Minting a token acts as proof of completion</strong> and may unlock digital rewards, credentials, or eligibility for further programs.</p>
+</blockquote>
+<hr />
+<h2 id="-required-images-minimum-9-screenshots"><a class="header" href="#-required-images-minimum-9-screenshots">📸 Required Images (Minimum 9 Screenshots)</a></h2>
+<p>You are required to upload <strong>at least 9 screenshots</strong>. These must clearly show:</p>
+<ul>
+<li>✅ Your <strong>Student Number</strong></li>
+<li>✅ Your <strong>Computer Date and Time</strong></li>
+<li>✅ Your <strong>Work Output</strong></li>
+</ul>
+<h3 id="you-must-include"><a class="header" href="#you-must-include">You must include:</a></h3>
+<ul>
+<li>🧠 <strong>Quiz Screenshot(s)</strong></li>
+<li>🚀 <strong>Marathon Participation Proof</strong></li>
+<li>🛠️ <strong>Practical Task Completion</strong></li>
+<li>📝 <strong>Homework Submissions</strong></li>
+</ul>
+<h2 id="-name-each-screenshot-meaningfully"><a class="header" href="#-name-each-screenshot-meaningfully">📂 Name each screenshot meaningfully.</a></h2>
+<h2 id="-need-help-9"><a class="header" href="#-need-help-9">💬 Need Help?</a></h2>
+<p>If you encounter issues while uploading or minting:</p>
+<ul>
+<li>📧 Email:
+<ul>
+<li><a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li><a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+</ul>
+</li>
+<li>📱 WhatsApp: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-github-submission-guide-for-beginners"><a class="header" href="#-github-submission-guide-for-beginners">🧰 GitHub Submission Guide (For Beginners)</a></h1>
+<p>Welcome! This guide will help you upload your Haskell Plutus practical tasks to GitHub — no coding or terminal required.</p>
+<hr />
+<h2 id="-step-1-create-a-github-account"><a class="header" href="#-step-1-create-a-github-account">🌐 Step 1: Create a GitHub Account</a></h2>
+<p><img src="github.png" alt="Video Preview" /></p>
+<ol>
+<li>Go to <a href="https://github.com">https://github.com</a></li>
+<li>Click <strong>Sign up</strong></li>
+<li>Fill in your details and follow the steps to verify your email</li>
+</ol>
+<hr />
+<h2 id="-step-2-create-a-new-repository"><a class="header" href="#-step-2-create-a-new-repository">📁 Step 2: Create a New Repository</a></h2>
+<p><img src="github2.png" alt="alt text" /></p>
+<ol>
+<li>
+<p>After signing in, click the <strong>+ icon</strong> in the top right</p>
+</li>
+<li>
+<p>Choose <strong>New repository</strong></p>
+</li>
+<li>
+<p>Fill in the form:</p>
+<ul>
+<li><strong>Repository name</strong>: <code>haskell-plutus-practicals</code> (or similar)</li>
+<li><strong>Description</strong>: Example — “Solutions to Haskell Plutus Tasks from Coxygen”</li>
+<li>Select <strong>Public</strong></li>
+<li>✅ Check <strong>“Add a README file”</strong></li>
+<li>✅ Choose <strong>MIT License</strong></li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Create repository</strong></p>
+</li>
+</ol>
+<hr />
+<h2 id="-step-3-upload-your-task-files"><a class="header" href="#-step-3-upload-your-task-files">⬆️ Step 3: Upload Your Task Files</a></h2>
+<p><img src="github3.png" alt="alt text" /></p>
+<ol>
+<li>In your new repository, click <strong>Add file &gt; Upload files</strong></li>
+<li>Drag or select your <code>.hs</code> files (e.g., <code>HC1T1.hs</code>, <code>HC2T2.hs</code>, etc.)</li>
+<li>Scroll down and click <strong>Commit changes</strong></li>
+</ol>
+<p>Repeat this for all your completed tasks.</p>
+<hr />
+<h2 id="-step-4-edit-the-readmemd"><a class="header" href="#-step-4-edit-the-readmemd">📝 Step 4: Edit the README.md</a></h2>
+<ol>
+<li>On your repo’s homepage, click <code>README.md</code></li>
+<li>Click the <strong>pencil icon</strong> to edit</li>
+<li>After editing Scroll down and click Commit changes.</li>
+</ol>
+<h2 id="-step-5-double-check-your-repository"><a class="header" href="#-step-5-double-check-your-repository">✅ Step 5: Double Check Your Repository</a></h2>
+<p>Make sure your repository includes:</p>
+<ul>
+<li>✅ Your <code>.hs</code> files (e.g., <code>HC1T1.hs</code>, <code>HC1T2.hs</code>, etc.)</li>
+<li>✅ A clear and professional <code>README.md</code></li>
+<li>✅ An open-source <strong>MIT License</strong></li>
+</ul>
+<hr />
+<h2 id="-step-6-share-your-github-link"><a class="header" href="#-step-6-share-your-github-link">📤 Step 6: Share Your GitHub Link</a></h2>
+<p>After completing your uploads:</p>
+<ul>
+<li>
+<p>Copy the <strong>URL</strong> of your repository<br />
+<em>(Example: <code>https://github.com/yourusername/haskell-plutus-practicals</code>)</em></p>
+</li>
+<li>
+<p>Save this link — you may be required to submit it for verification or portfolio review.</p>
+</li>
+</ul>
+<hr />
+<h2 id="-need-help-10"><a class="header" href="#-need-help-10">🆘 Need Help?</a></h2>
+<ul>
+<li>
+<p>📧<a href="mailto:admin@coxygen.co">admin@coxygen.co</a></p>
+</li>
+<li>
+<p>📧<a href="mailto:info@coxygen.co">info@coxygen.co</a></p>
+</li>
+<li>
+<p>💬 <strong>WhatsApp Support</strong>: +27 73 182 0631</p>
+</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-coxy-pocket-wallet-user-guide"><a class="header" href="#-coxy-pocket-wallet-user-guide">👛 Coxy Pocket Wallet User Guide</a></h1>
+<p>Coxy Pocket Wallet is your secure Cardano-compatible wallet built into the Coxygen platform. It lets you manage ADA, mint tokens, and back up your keys with ease.</p>
+<p>Follow the steps below to use all its features effectively:</p>
+<hr />
+<h2 id="-how-to-access-the-wallet"><a class="header" href="#-how-to-access-the-wallet">🧭 How to Access the Wallet</a></h2>
+<p>To get started:</p>
+<ol>
+<li>Click on <strong>“Coxy Pocket Wallet”</strong> from the <strong>navigation bar</strong> at the top of the page.</li>
+<li>You will be taken to the wallet interface.</li>
+<li>Follow the instructions below to unlock and use each feature.</li>
+</ol>
+<p><img src="coxy.png" alt="hi" /></p>
+<h2 id="-step-1-access-the-wallet"><a class="header" href="#-step-1-access-the-wallet">🔐 Step 1: Access the Wallet</a></h2>
+<p>To begin using the Coxy Pocket Wallet:</p>
+<ol>
+<li><strong>Enter your Passphrase</strong> (secure password used for signing)</li>
+<li><strong>Enter your PIN Code</strong> (used for connecting the wallet to dApps and performing transactions)</li>
+</ol>
+<hr />
+<h2 id="-step-2-utxo-balance-consolidation"><a class="header" href="#-step-2-utxo-balance-consolidation">🔁 Step 2: UTxO Balance Consolidation</a></h2>
+<ul>
+<li>Click on the <strong>“Consolidate UTxO”</strong> button.</li>
+</ul>
+<hr />
+<h2 id="-step-3-mint-a-token"><a class="header" href="#-step-3-mint-a-token">🪙 Step 3: Mint a Token</a></h2>
+<ol>
+<li>Enter the <strong>Token Name</strong> (e.g., <code>HC1T1Proof</code>)</li>
+<li>Enter the <strong>Quantity</strong> (e.g., <code>1</code>)</li>
+<li>Click <strong>“Mint Token”</strong><br />
+Your token will be recorded on the Cardano testnet blockchain.</li>
+</ol>
+<hr />
+<h2 id="-step-4-send-ada-or-tokens"><a class="header" href="#-step-4-send-ada-or-tokens">💸 Step 4: Send ADA or Tokens</a></h2>
+<p>To send ADA to another wallet address:</p>
+<ol>
+<li>Enter the <strong>Amount</strong> to send</li>
+<li>Paste the <strong>Recipient Address</strong></li>
+<li>Click <strong>“Send ADA”</strong></li>
+</ol>
+<hr />
+<h2 id="-step-5-backup-your-wallet-recovery-keys"><a class="header" href="#-step-5-backup-your-wallet-recovery-keys">🧾 Step 5: Backup Your Wallet (Recovery Keys)</a></h2>
+<p>To view and back up your <strong>24-word mnemonic seed</strong>:</p>
+<ol>
+<li>Scroll to the <strong>“Cardano Wallet Keys Backup”</strong> section</li>
+<li>click on <strong>“Show Your Cardano Wallet Keys Backup”</strong></li>
+<li>It will then show your 24 phrases.</li>
+</ol>
+<blockquote>
+<p>🔒 Write down your 24 recovery words on paper and store them offline.<br />
+🚫 Never store them digitally or share with anyone.</p>
+</blockquote>
+<hr />
+<h2 id="-step-6-additional-wallet-addresses"><a class="header" href="#-step-6-additional-wallet-addresses">➕ Step 6: Additional Wallet Addresses</a></h2>
+<p>Coxy Wallet allows you to generate <strong>4 additional Cardano wallet addresses</strong>.</p>
+<ul>
+<li>These are used for <strong>receiving payments</strong> and <strong>minted tokens</strong></li>
+<li>The <strong>first (default)</strong> address is used for <strong>on-chain Haskell progress tracking</strong></li>
+<li>You can <strong>copy addresses</strong> to your clipboard for sharing or receiving ADA/tokens</li>
+</ul>
+<hr />
+<h2 id="-need-help-11"><a class="header" href="#-need-help-11">💬 Need Help?</a></h2>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📧 Email: <a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+<li>📱 WhatsApp Support: <strong>+27 73 182 0631</strong></li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-lost-pin-recovery"><a class="header" href="#-lost-pin-recovery">🔐 Lost PIN Recovery</a></h1>
+<p>If you’ve forgotten your wallet PIN, don’t worry — you can reset it securely through the <strong>Lost PIN</strong> feature.</p>
+<hr />
+<h2 id="-step-1-navigate-to-lost-pin"><a class="header" href="#-step-1-navigate-to-lost-pin">🧭 Step 1: Navigate to Lost PIN</a></h2>
+<ol>
+<li>Go to the Coxygen platform.</li>
+<li>Click on <strong>"Lost PIN"</strong> from the navigation bar.</li>
+</ol>
+<hr />
+<h2 id="-step-2-fill-in-the-recovery-form"><a class="header" href="#-step-2-fill-in-the-recovery-form">📝 Step 2: Fill In the Recovery Form</a></h2>
+<p>To reset your PIN, provide the following details accurately:</p>
+<ul>
+<li><strong>Email Address</strong> – must match the one you registered with</li>
+<li><strong>Phone Number</strong> – enter in <strong>international format</strong>, e.g., <code>+27XXXXXXXXX</code></li>
+<li><strong>Passphrase</strong> – your <strong>strong password</strong> used for transaction signing</li>
+<li><strong>New PIN Code</strong> – your new 7+ digit PIN</li>
+</ul>
+<hr />
+<h2 id="-step-3-update-your-pin"><a class="header" href="#-step-3-update-your-pin">🔁 Step 3: Update Your PIN</a></h2>
+<p>After filling in all fields:</p>
+<ol>
+<li>Double-check that your information is correct.</li>
+<li>Click the <strong>"Update PIN Code"</strong> button.</li>
+</ol>
+<blockquote>
+<p>✅ If all details are valid, your new PIN will be saved and ready to use immediately.</p>
+</blockquote>
+<hr />
+<h2 id="-important-security-tips"><a class="header" href="#-important-security-tips">⚠️ Important Security Tips</a></h2>
+<ul>
+<li>Keep your <strong>passphrase and PIN code separate</strong>.</li>
+<li><strong>Never share</strong> your passphrase or PIN with anyone.</li>
+<li>Make sure your <strong>new PIN</strong> is different from your previous one and easy to remember (but hard to guess).</li>
+</ul>
+<hr />
+<h2 id="-need-help-12"><a class="header" href="#-need-help-12">🆘 Need Help?</a></h2>
+<p>If you encounter any issues:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📧 Email: <a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+<li>📱 WhatsApp Support: +27 73 182 0631</li>
+</ul>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-conclusion"><a class="header" href="#-conclusion">🎓 Conclusion</a></h1>
+<p>Congratulations on reaching the end of the Coxygen Haskell Plutus onboarding guide!</p>
+<p>You’ve now explored:</p>
+<p>✅ How to <strong>enroll</strong> and verify your contact information<br />
+✅ How to <strong>create and secure your Cardano wallet</strong><br />
+✅ Where to find and complete your <strong>Haskell &amp; Plutus lessons and tasks</strong><br />
+✅ How to complete and submit your <strong>practical assignments and quizzes</strong><br />
+✅ How to access your <strong>on-chain credentials and token certificates</strong></p>
+<hr />
+<h2 id="-your-journey-has-just-begun"><a class="header" href="#-your-journey-has-just-begun">🌱 Your Journey Has Just Begun</a></h2>
+<p>Learning <strong>Haskell and Plutus</strong> is a powerful investment in your future as a blockchain developer. These skills are rare, highly valued, and at the heart of the <strong>Cardano ecosystem</strong>.</p>
+<blockquote>
+<p>💡 <em>Remember: True mastery comes from consistent practice, asking questions, and never giving up.</em></p>
+</blockquote>
+<p>Whether you're building decentralized applications, auditing contracts, or mentoring others, this foundation will carry you far.</p>
+<hr />
+<h2 id="-stay-connected--keep-learning"><a class="header" href="#-stay-connected--keep-learning">💬 Stay Connected &amp; Keep Learning</a></h2>
+<ul>
+<li>📚 Continue with <strong>Course B</strong> after completing Course A</li>
+<li>💬 Join the developer community (Telegram &amp; Discord coming soon)</li>
+<li>🧪 Explore additional Plutus projects and challenges on GitHub</li>
+<li>🛠️ Build your own smart contracts and test them with confidence</li>
+</ul>
+<hr />
+<h2 id="-support-is-always-available"><a class="header" href="#-support-is-always-available">🆘 Support is Always Available</a></h2>
+<p>If you ever feel stuck or unsure, remember:</p>
+<ul>
+<li>📧 <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📧 <a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+<li>📱 WhatsApp: +27 73 182 0631</li>
+</ul>
+<p>We're here to help you succeed.</p>
+<hr />
+<h2 id="-need-help-13"><a class="header" href="#-need-help-13">💬 Need Help?</a></h2>
+<p>If you need assistance setting up your wallet:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📱 WhatsApp: +27 73 182 0631</li>
+</ul>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
