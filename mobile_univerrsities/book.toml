@@ -1,0 +1,6 @@
+[book]
+authors = ["Rofhatu"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Coxygen Global Haskel Plutus Mobile app User Help"
