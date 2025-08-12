@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>👛 Coxy Wallet - Coxygen Global Haskel Plutus Mobile app User Help</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 📘 Introduction</a></li><li class="chapter-item expanded "><a href="get_started.html"><strong aria-hidden="true">2.</strong> 🧭 Get Started</a></li><li class="chapter-item expanded "><a href="verify.html"><strong aria-hidden="true">3.</strong> 📧 Verify Email and Phone Code</a></li><li class="chapter-item expanded "><a href="create_wallet.html"><strong aria-hidden="true">4.</strong> 🔐 Creating Your Cardano Wallet</a></li><li class="chapter-item expanded "><a href="connect_wallet_and_faucet.html"><strong aria-hidden="true">5.</strong> 🔗 Connect Wallet & Get Test ADA</a></li><li class="chapter-item expanded "><a href="profile.html"><strong aria-hidden="true">6.</strong> 👤 Profile</a></li><li class="chapter-item expanded "><a href="access_lessons.html"><strong aria-hidden="true">7.</strong> 📘 Accessing the Haskell Plutus Lessons</a></li><li class="chapter-item expanded "><a href="haskell_quiz.html"><strong aria-hidden="true">8.</strong> 🧠 Completing the Haskell Plutus Quizzes</a></li><li class="chapter-item expanded "><a href="haskell_tasks.html"><strong aria-hidden="true">9.</strong> 💻 Completing the Haskell Plutus Tasks</a></li><li class="chapter-item expanded "><a href="onchain_work_traceability.html"><strong aria-hidden="true">10.</strong> 📈 On-Chain Work Traceability & Credential Minting</a></li><li class="chapter-item expanded "><a href="github.html"><strong aria-hidden="true">11.</strong> 📁 How to use Github</a></li><li class="chapter-item expanded "><a href="coxy_wallet.html" class="active"><strong aria-hidden="true">12.</strong> 👛 Coxy Wallet</a></li><li class="chapter-item expanded "><a href="lost_pin.html"><strong aria-hidden="true">13.</strong> 🔐 Lost PIN Recovery</a></li><li class="chapter-item expanded "><a href="partners.html"><strong aria-hidden="true">14.</strong> 🤝Our Partners</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">15.</strong> ✅ Conclusion</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Coxygen Global Haskel Plutus Mobile app User Help</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-coxy-pocket-wallet-user-guide"><a class="header" href="#-coxy-pocket-wallet-user-guide">👛 Coxy Pocket Wallet User Guide</a></h1>
+<p>Coxy Pocket Wallet is your secure Cardano-compatible wallet built into the Coxygen platform. It lets you manage ADA, mint tokens, and back up your keys with ease.</p>
+<p>Follow the steps below to use all its features effectively.</p>
+<hr />
+<h2 id="-how-to-access-the-wallet"><a class="header" href="#-how-to-access-the-wallet">🧭 How to Access the Wallet</a></h2>
+<p>To get started:</p>
+<ol>
+<li>Click on <strong>“Coxy Wallet”</strong> from the <strong>navigation bar</strong> at the top of the page.</li>
+<li>You will be taken to the wallet interface.</li>
+<li>Follow the instructions below to unlock and use each feature.</li>
+</ol>
+<p><img src="coxy.png" alt="Wallet Screenshot" /></p>
+<hr />
+<h2 id="-step-1-access-the-wallet"><a class="header" href="#-step-1-access-the-wallet">🔐 Step 1: Access the Wallet</a></h2>
+<p>To begin using the Coxy Pocket Wallet:</p>
+<ol>
+<li><strong>Enter your Passphrase</strong> (secure password used for signing)</li>
+<li><strong>Enter your PIN Code</strong> (used for connecting the wallet to dApps and performing transactions)</li>
+</ol>
+<hr />
+<h2 id="-step-2-utxo-balance-consolidation"><a class="header" href="#-step-2-utxo-balance-consolidation">🔁 Step 2: UTxO Balance Consolidation</a></h2>
+<p>Sometimes your wallet may have many small pieces of ADA left from different transactions. These are called <strong>UTxOs</strong> (Unspent Transaction Outputs). Too many small UTxOs can slow down your wallet or cause errors when minting tokens or sending ADA.</p>
+<p>To fix this:</p>
+<ul>
+<li>Click the <strong>“Consolidate UTxO”</strong> button.</li>
+</ul>
+<p>✅ This will <strong>combine all small balances into one</strong>, making your wallet faster and more reliable.</p>
+<blockquote>
+<p>💡 Always consolidate your UTxO before minting tokens or when you encounter wallet-related errors.</p>
+</blockquote>
+<hr />
+<h2 id="-step-3-mint-a-token"><a class="header" href="#-step-3-mint-a-token">🪙 Step 3: Mint a Token</a></h2>
+<p>To mint a token:</p>
+<ol>
+<li>Enter the <strong>Token Name</strong> (e.g., <code>HC1T1Proof</code>)</li>
+<li>Enter the <strong>Quantity</strong> (e.g., <code>1</code>)</li>
+<li>Click <strong>“Mint Token”</strong></li>
+</ol>
+<p>Your token will be recorded on the Cardano testnet blockchain.</p>
+<hr />
+<h2 id="-step-4-send-ada-or-tokens"><a class="header" href="#-step-4-send-ada-or-tokens">💸 Step 4: Send ADA or Tokens</a></h2>
+<p>To send ADA:</p>
+<ol>
+<li>Enter the <strong>Amount</strong> to send</li>
+<li>Paste the <strong>Recipient Address</strong></li>
+<li>Click <strong>“Send ADA”</strong></li>
+</ol>
+<blockquote>
+<p>📤 This feature supports both ADA and native tokens on the testnet.</p>
+</blockquote>
+<p>it will also show list of tokens you have on your wallet.</p>
+<hr />
+<h2 id="-step-5-backup-your-wallet-recovery-keys"><a class="header" href="#-step-5-backup-your-wallet-recovery-keys">🧾 Step 5: Backup Your Wallet (Recovery Keys)</a></h2>
+<p>To view and back up your <strong>24-word mnemonic seed</strong>:</p>
+<ol>
+<li>Scroll to the <strong>“Cardano Wallet Keys Backup”</strong> section</li>
+<li>Click on <strong>“Show Your Cardano Wallet Keys Backup”</strong></li>
+<li>Your 24 recovery phrases will appear</li>
+</ol>
+<blockquote>
+<p>🔒 <strong>Write them down on paper</strong> and store them offline.<br />
+🚫 <strong>Never store them digitally</strong> or share with anyone — your wallet security depends on it.</p>
+</blockquote>
+<hr />
+<h2 id="-step-6-additional-wallet-addresses"><a class="header" href="#-step-6-additional-wallet-addresses">➕ Step 6: Additional Wallet Addresses</a></h2>
+<p>Coxy Wallet allows you to generate <strong>4 additional Cardano wallet addresses</strong>.</p>
+<ul>
+<li>These are used for <strong>receiving ADA or tokens</strong></li>
+<li>The <strong>first address</strong> is used for <strong>on-chain Haskell progress tracking</strong></li>
+<li>You can <strong>copy</strong> any address to use it for transactions</li>
+</ul>
+<hr />
+<h2 id="-need-help"><a class="header" href="#-need-help">💬 Need Help?</a></h2>
+<p>If you need support at any time:</p>
+<ul>
+<li>📧 Email: <a href="mailto:admin@coxygen.co">admin@coxygen.co</a></li>
+<li>📧 Email: <a href="mailto:info@coxygen.co">info@coxygen.co</a></li>
+<li>📱 WhatsApp: <strong>+27 73 182 0631</strong></li>
+</ul>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="github.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="lost_pin.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="github.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="lost_pin.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
